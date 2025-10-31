@@ -1,0 +1,139 @@
+/* 1. Reset Kodu */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+/* 2. Wallpaper (Ana Konteyner) */
+.wallpaper {
+    background-image:url('./assets/of.png');
+    height: 100vh;
+    width: 100vw;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    /* İKİ SÜTUN İÇİN */
+    display: flex;
+    flex-direction: row;
+    overflow: hidden; /* Scroll'u engeller */
+    padding: 20px;
+}
+
+/* 3. İki Sütunu Tanımlama */
+.main-content {
+    flex: 3; /* 3 birim yer kapla */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar {
+    flex: 1; /* 1 birim yer kapla */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 15px;
+
+}
+
+/* 4. Input ve Buton Sargısı */
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+
+}
+
+/* 5. DİĞER ELEMENTLER (TÜM 'margin-left' SİLİNDİ) */
+
+.appInput{
+    width: 700px;
+    height: 45px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius:25px;
+    padding: 0 15px; /* İçten boşluk */
+    border: solid black ;
+
+}
+.appButton{
+    background-color: grey;
+    color: white;
+    font-weight: bold;
+    height: 45px;
+    font-size: 25px;
+    width:100px;
+    border-radius:25px;
+    margin-left: 20px; /* Input ile arası */
+    border: none;
+    cursor: pointer;
+}
+.baslik{
+    font-size: 100px;
+    font-weight: bold;
+    font-family: "Dancing Script", cursive;
+    color: palevioletred;
+}
+.gecmis{
+    font-size: 25px;
+    font-weight: bold;
+    height: 45px;
+    width: 100%; /* Sütununa yayılsın */
+    border-radius:25px;
+    background-color: grey;
+    color: white;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+.arama{
+    font-size: 25px;
+    font-weight: bold;
+    width: 100% ;
+    height: 45px;
+    border-radius:25px;
+    padding: 0 15px;
+    border: black solid;
+}
+.sonuc{
+    font-size: 25px;
+    font-weight: bold;
+    height: 100%;
+    width: 850px;
+    border-radius:25px;
+    background-color: rgba(211, 211, 211, 0.8); /* Biraz şeffaflık */
+    color: black;
+    margin-top: 20px;
+    padding: 15px;
+    overflow-y: auto
+}
+.gecmisSonuc{
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius:25px;
+    height: 100%;
+    width: 100%;
+    color: black;
+    background-color : rgba(211, 211, 211, 0.8); /* Biraz şeffaflık */
+    padding: 15px;
+    overflow-y: auto
+}
+.kullanici{
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius:25px;
+    height: 50px;
+    width: 18%;
+    color: black;
+    background-color : white;
+
+}
