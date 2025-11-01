@@ -6,7 +6,7 @@ import os
 from app.data.processed.preprocessing import preprocessing
 
 def initialize_vectorstore():
-    path=r"C:\Users\hilal\PycharmProjectsMyBeautyChat\app\data\json\all_products_refined.json"
+    path=os.DATA
     belgeler=preprocessing(path )
 
     if not belgeler:

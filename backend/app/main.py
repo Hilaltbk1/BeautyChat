@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routes.search import router
-from app.config.middleware import create_middleware
+from app.routers.search import routers
+from wsgi import create_middleware
 from app.wsgi import create_app
 import uvicorn
 

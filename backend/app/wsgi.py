@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routes  import  search
-from app.routes.history import router as historyRouter
+from app.routers  import  search
+from app.routers.history import router as historyRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 
