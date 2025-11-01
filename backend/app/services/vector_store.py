@@ -13,7 +13,7 @@ def initialize_vectorstore():
         print("Dökümanlar oluşturulamadı.")
 
 
-    persist_directory = "vectorStoreDB"
+    persist_directory = ("vector_store_db")
     embeddings=HuggingFaceEmbeddings(
         model_name="ytu-ce-cosmos/turkish-e5-large",
         model_kwargs={"device":"cuda"}

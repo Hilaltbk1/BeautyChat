@@ -1,5 +1,5 @@
 from app.models.schemas.schemas import qa_prompt,q_prompt
-from app.services.vectorStore import initialize_vectorstore
+from app.services.vector_store import initialize_vectorstore
 from app.config import config
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain, history_aware_retriever
 from langchain.chains.combine_documents import create_stuff_documents_chain

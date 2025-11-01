@@ -6,7 +6,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 
 from app.config.db import SessionLocal
 from app.models.model import SessionModel, MessageModel, LogModel
-from app.services.retrivalChain import retrieval_chain
+from app.services.retrival_chain import retrieval_chain
 from fastapi import FastAPI, APIRouter
 from pydantic import BaseModel
 app=FastAPI()
