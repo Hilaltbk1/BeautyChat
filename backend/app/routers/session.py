@@ -1,17 +1,16 @@
+import json
 from pydantic import BaseModel
-
-from  app.config.db import SessionLocal
-from app.models.model import SessionModel,MessageModel
+from  backend.app.config.db import SessionLocal
+from backend.app.models.model import SessionModel, MessageModel, LogModel
 import logging
-from fastapi import FastAPI, HTTPException
+from fastapi import  HTTPException
 from datetime import datetime
 from langchain_core.messages import HumanMessage, AIMessage
 
+from backend.app.routers.search import rag_chain
 
-
-logging.basicConfic(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger=logging.getLogger(__name__)
-
 
 
 def getHistory(user_name:str,limit:int =10):
@@ -28,6 +27,7 @@ def getHistory(user_name:str,limit:int =10):
         #message id
         db_messages=db_session.query(MessageModel)\
         .filter(MessageModel.session_id == session.id)\
+        .order_by(MessageModel.created_at.desc())\
         .limit(limit) .all()
 
         return db_messages
@@ -35,7 +35,8 @@ def getHistory(user_name:str,limit:int =10):
     except Exception as e:
         logger.info(f"Didn't find session for user {user_name} : {e}")
         raise HTTPException(status_code=500, detail=str(e))
-
+    finally:
+        db_session.close()
 
 
 class QueryRequest(BaseModel):
@@ -50,7 +51,7 @@ def search(request:QueryRequest):
 
     logger.info(f"Received query from user {user_name}:{query}")
     db_session=SessionLocal()
-    human_mesage_entry=None
+    human_message_entry=None
     try:
         #Sessionmodel tablosunda sorgu
         session=db_session.query(SessionModel).filter(SessionModel.user_name == user_name).first()
@@ -63,7 +64,8 @@ def search(request:QueryRequest):
             db_session.refresh(session)
 
         #O kullanıcıya ait(id'li) tüm mesaj geçmişini filtrele
-        db_messages=db_session.query(MessageModel).filter(MessageModel.session_id == session.id).order_by(MessageModel.created_at).all()
+        db_messages=db_session.query(MessageModel).filter(MessageModel.session_id == session.id).order_by(MessageModel.created_at).limit(20).all()
+        db_messages.reverse()
         chat_history=[]
 
         for msg in db_messages:
@@ -81,7 +83,7 @@ def search(request:QueryRequest):
         db_session.commit()
         db_session.refresh(human_message_entry)
 
-        logger_info(f"Invoking RAG chain for session {session.id}")
+        logger.info(f"Invoking RAG chain for session {session.id}")
 
         response=rag_chain.invoke({"input":query,"chat_history":chat_history})
         answer=response.get("answer","No answer avaible")
@@ -101,7 +103,7 @@ def search(request:QueryRequest):
             request=json.dumps({"query":query}),
             response=json.dumps({"answer":answer}),
             error_message=None,
-            message_id=ai_message_entry.id
+            message_id= human_message_entry.id
         )
         db_session.add(succes_log)
         db_session.commit()
@@ -110,15 +112,16 @@ def search(request:QueryRequest):
     except Exception as e:
         logger.error(f"Error during query for user {user_name}: {e}")
 
-        if human_mesage_entry:
+        if human_message_entry:
             error_log=LogModel(
                 status_code=500,
                 request=json.dumps({"query":query}),
                 response=None,
                 error_message=str(e),
-                message_id=human_mesage_entry.id
+                message_id=human_message_entry.id
             )
             db_session.add(error_log)
             db_session.commit()
         raise HTTPException(status_code=500, detail=str(e))
-
+    finally:
+        db_session.close()

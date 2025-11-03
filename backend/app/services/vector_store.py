@@ -3,7 +3,7 @@ import torch
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 import os
-from app.data.processed.preprocessing import preprocessing
+from backend.app.data.processed.preprocessing import preprocessing
 
 def initialize_vectorstore():
     path=os.DATA

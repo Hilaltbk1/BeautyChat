@@ -1,6 +1,6 @@
 from typing import Generator
 from sqlalchemy import create_engine, QueuePool
-from app.config.config import settings
+from config import settings
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 engine = create_engine(settings.DATABASE_URL, poolclass=QueuePool, echo=True)

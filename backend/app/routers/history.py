@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException, APIRouter
-from app.routers.session import getHistory
+from fastapi import  HTTPException, APIRouter
+from session import getHistory
 import logging
 
 router = APIRouter()
