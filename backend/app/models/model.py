@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey,Text
 import datetime
 from sqlalchemy.orm import relationship
 
-from app.config.db import Base
+from backend.app.config.db import Base
 
 
 class SessionModel(Base):

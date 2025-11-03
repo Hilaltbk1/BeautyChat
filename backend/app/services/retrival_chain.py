@@ -1,9 +1,10 @@
-from app.models.schemas.schemas import qa_prompt,q_prompt
-from app.services.vector_store import initialize_vectorstore
-from app.config import config
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain, history_aware_retriever
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from backend.app.config import config
+from .vector_store import initialize_vectorstore
+from ..prompt.prompt import qa_prompt, q_prompt
+from ..config.config import settings
 from langchain_groq import ChatGroq
+from langchain.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
 
 def retrieval_chain():
     db=initialize_vectorstore()
